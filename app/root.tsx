@@ -16,8 +16,11 @@ import { TooltipProvider } from './ui/atoms/tooltip';
 import { SolanaProvider } from '~/ui/organisms/providers/solana-provider';
 import sonnerStyles from 'sonner/dist/styles.css?url';
 import { WalletProvider } from './provider/wallet-provider';
-import { LinksFunction, MetaFunction } from '@remix-run/node';
-import { LoaderFunctionArgs } from '@remix-run/node';
+import {
+  LoaderFunctionArgs,
+  LinksFunction,
+  MetaFunction,
+} from '@remix-run/node';
 import { config } from '~/config.server';
 
 export const links: LinksFunction = () => [
@@ -34,10 +37,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     },
     ENV: {
       CONNECTED_PUBLIC_KEY: user?.walletPublicKey,
-      SOLANA_NETWORK: config.SOLANA_NETWORK,
-      SOLANA_RPC_URL: config.SOLANA_RPC_URL,
-      MARKETPLACE_PROGRAM_ID: config.MARKETPLACE_PROGRAM_ID,
-      MARKETPLACE_AUTHORITY_PUBLIC_KEY: config.MARKETPLACE_AUTHORITY_PUBLIC_KEY,
+      SOLANA_NETWORK: config.VITE_SOLANA_NETWORK,
+      SOLANA_RPC_URL: config.VITE_SOLANA_RPC_URL,
+      MARKETPLACE_PROGRAM_ID: config.VITE_MARKETPLACE_PROGRAM_ID,
+      MARKETPLACE_AUTHORITY_PUBLIC_KEY:
+        config.VITE_MARKETPLACE_AUTHORITY_PUBLIC_KEY,
     },
   });
 };

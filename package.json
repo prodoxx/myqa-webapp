@@ -57,6 +57,7 @@
     "compression": "^1.7.5",
     "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
+    "dotenv": "^16.4.7",
     "embla-carousel-react": "^8.5.1",
     "express": "^4.21.2",
     "http-assert": "^1.5.0",

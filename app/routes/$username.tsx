@@ -53,11 +53,11 @@ export const loader = async (args: LoaderFunctionArgs) => {
       getCryptoPrice(SupportedCoins.BONKUSDT, process.env.BINANCE_API_KEY),
       prisma.qA.count({ where: { userId: user?.id } }),
       isCreator
-        ? user.UserProfile.QAs?.map((c) => ({
+        ? (user.UserProfile.QAs?.map((c) => ({
             id: c.id,
             decryptedAnswer:
               decryptContent(c.encryptedAnswer, c.IpfsPin?.symmetricKey!) ?? '',
-          })) ?? []
+          })) ?? [])
         : [],
     ]);
 
