@@ -28,15 +28,15 @@ export default defineConfig({
     },
   },
   plugins: [
-    nodePolyfills({
-      include:
-        process.env.NODE_ENV === 'production'
-          ? ['buffer']
-          : ['buffer', 'process'],
-      globals: {
-        process: process.env.NODE_ENV === 'production' ? false : 'dev',
-      },
-    }),
+    // nodePolyfills({
+    //   include:
+    //     process.env.NODE_ENV === 'production'
+    //       ? ['buffer']
+    //       : ['buffer', 'process'],
+    //   globals: {
+    //     process: process.env.NODE_ENV === 'production' ? false : 'dev',
+    //   },
+    // }),
     remix({
       future: {
         v3_fetcherPersist: true,
