@@ -18,6 +18,7 @@ import sonnerStyles from 'sonner/dist/styles.css?url';
 import { WalletProvider } from './provider/wallet-provider';
 import { LinksFunction, MetaFunction } from '@remix-run/node';
 import { LoaderFunctionArgs } from '@remix-run/node';
+import { config } from '~/config.server';
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: sonnerStyles },
@@ -33,11 +34,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     },
     ENV: {
       CONNECTED_PUBLIC_KEY: user?.walletPublicKey,
-      SOLANA_NETWORK: process.env.SOLANA_NETWORK || 'devnet',
-      SOLANA_RPC_URL: process.env.SOLANA_RPC_URL || '',
-      MARKETPLACE_PROGRAM_ID: process.env.MARKETPLACE_PROGRAM_ID,
-      MARKETPLACE_AUTHORITY_PUBLIC_KEY:
-        process.env.MARKETPLACE_AUTHORITY_PUBLIC_KEY,
+      SOLANA_NETWORK: config.SOLANA_NETWORK,
+      SOLANA_RPC_URL: config.SOLANA_RPC_URL,
+      MARKETPLACE_PROGRAM_ID: config.MARKETPLACE_PROGRAM_ID,
+      MARKETPLACE_AUTHORITY_PUBLIC_KEY: config.MARKETPLACE_AUTHORITY_PUBLIC_KEY,
     },
   });
 };
