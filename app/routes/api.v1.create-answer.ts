@@ -44,7 +44,7 @@ export const action: ActionFunction = async ({ request }) => {
     questionHash,
     encryptedAnswer,
   } = await createQuestionSchema.parseAsync(await request.json());
-  const unlockPriceInBonk = BigInt(unlockPrice.value);
+  const unlockPriceInBonk = unlockPrice.value;
 
   try {
     const userProfile = await prisma.userProfile.findUnique({

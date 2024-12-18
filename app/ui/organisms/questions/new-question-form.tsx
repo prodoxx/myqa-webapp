@@ -155,7 +155,7 @@ export const NewQuestionForm = () => {
                   disabled={isLoading || isSubmitting}
                   onValueChange={(_, __, values) => {
                     setPrice(values);
-                    setValue('unlockPriceInBonk', BigInt(values?.float!));
+                    setValue('unlockPriceInBonk', values?.float ?? 0);
                   }}
                   className="peer h-16 w-full bg-transparent text-2xl placeholder:text-muted-foreground focus:!outline-none !outline-none !border-none !ring-0 disabled:cursor-not-allowed disabled:opacity-50"
                   {...omit(register('unlockPriceInBonk'), [

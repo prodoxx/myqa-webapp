@@ -3,7 +3,6 @@ import { type WalletContextState } from '@solana/wallet-adapter-react';
 import axios from 'axios';
 import { z } from 'zod';
 import { MarketplaceClient } from '~/lib/marketplace';
-import { bigIntReplacer } from '~/utils/big-int-replacer';
 
 const schema = z.object({
   question: z.string().min(10, 'A longer question is required'),
@@ -13,8 +12,8 @@ const schema = z.object({
     .min(1)
     .max(100_000),
   unlockPriceInBonk: z
-    .bigint({ message: 'A minimum of 1 BONK is required' })
-    .min(BigInt(1)),
+    .number({ message: 'A minimum of 1 BONK is required' })
+    .min(1),
 });
 
 export type CreateQuestionAndAnswerFormData = z.infer<typeof schema>;
@@ -46,7 +45,7 @@ export async function createQuestionAndAnswer({
         contentCid: cid,
         contentMetadataHash: contentHash,
         maxKeys,
-        unlockPrice: Number(unlockPriceInBonk),
+        unlockPrice: unlockPriceInBonk,
         wallet,
       });
 
@@ -61,9 +60,6 @@ export async function createQuestionAndAnswer({
           unlockPrice: unlockPriceInBonk,
           maxKeys,
           questionHash,
-        },
-        {
-          transformRequest: [(data) => JSON.stringify(data, bigIntReplacer)],
         }
       );
 
