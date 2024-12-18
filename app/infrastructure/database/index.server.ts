@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { fieldEncryptionExtension } from 'prisma-field-encryption';
+// import { fieldEncryptionExtension } from 'prisma-field-encryption';
 
 // add prisma to the NodeJS global type
 interface CustomNodeJsGlobal extends NodeJS.Global {
@@ -17,11 +17,12 @@ const prisma =
         url: process.env.DATABASE_URL as string,
       },
     },
-  }).$extends(
-    fieldEncryptionExtension({
-      encryptionKey: process.env.ENCRYPTION_KEY as string,
-    })
-  );
+  });
+// }).$extends(
+//   fieldEncryptionExtension({
+//     encryptionKey: process.env.ENCRYPTION_KEY as string,
+//   })
+// );
 
 if (process.env.NODE_ENV === 'development') global.prisma = prisma;
 

@@ -104,7 +104,7 @@ model IpfsPin {
   id           String    @id @default(cuid())
   cid          String    @unique
   status       PinStatus @default(PINNED)
-  symmetricKey String /// @encrypted?mode=strict
+  symmetricKey String
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   userId       Int
