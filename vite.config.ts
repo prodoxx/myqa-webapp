@@ -29,9 +29,12 @@ export default defineConfig({
   },
   plugins: [
     nodePolyfills({
-      include: ['buffer', 'process'],
+      include:
+        process.env.NODE_ENV === 'production'
+          ? ['buffer']
+          : ['buffer', 'process'],
       globals: {
-        process: process.env.NODE_ENV === 'production' ? true : 'dev',
+        process: process.env.NODE_ENV === 'production' ? false : 'dev',
         Buffer: true,
         global: true,
       },
