@@ -93,7 +93,6 @@
     "tailwindcss-animate": "^1.0.7",
     "tiny-invariant": "^1.3.3",
     "vaul": "^1.1.2",
-    "vite-plugin-node-polyfills": "^0.22.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -140,7 +139,8 @@
     "tsx": "^4.19.2",
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
-    "vite-tsconfig-paths": "^4.2.1"
+    "vite-tsconfig-paths": "^4.2.1",
+    "vite-plugin-node-polyfills": "^0.1.1"
   },
   "engines": {
     "node": ">=20.0.0"

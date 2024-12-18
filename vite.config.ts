@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { installGlobals } from '@remix-run/node';
 // import { resolve } from 'path';
-// import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 installGlobals();
 
@@ -28,6 +28,9 @@ export default defineConfig({
   //   },
   // },
   plugins: [
+    nodePolyfills({
+      include: ['buffer'],
+    }),
     // nodePolyfills({
     //   include:
     //     process.env.NODE_ENV === 'production'
