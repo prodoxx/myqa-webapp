@@ -10,12 +10,6 @@ declare module '@remix-run/node' {
 }
 
 export default defineConfig({
-  ssr: {
-    noExternal:
-      process.env.NODE_ENV === 'production'
-        ? ['posthog-js', '@project-serum/anchor']
-        : ['@project-serum/anchor'],
-  },
   plugins: [
     nodePolyfills({ include: ['buffer'] }),
     remix({

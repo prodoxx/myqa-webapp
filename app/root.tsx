@@ -6,19 +6,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLocation,
   useRouteError,
 } from '@remix-run/react';
 import { typedjson, useTypedLoaderData } from 'remix-typedjson';
 import '~/assets/styles/app.css';
 import { authenticator } from './auth.server';
-import { getDomainUrl } from './infrastructure/analytics/seo';
-import { PHProvider } from './provider/posthog-provider';
 import { UserProvider } from './provider/user-provider';
 import { TooltipProvider } from './ui/atoms/tooltip';
 import { SolanaProvider } from '~/ui/organisms/providers/solana-provider';
-import { useEffect } from 'react';
-import { posthog } from './infrastructure/analytics/index.client';
 import sonnerStyles from 'sonner/dist/styles.css?url';
 import { WalletProvider } from './provider/wallet-provider';
 import { LinksFunction, MetaFunction } from '@remix-run/node';
@@ -34,7 +29,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return typedjson({
     user,
     requestInfo: {
-      origin: getDomainUrl(request),
       path: new URL(request.url).pathname,
     },
     ENV: {
@@ -64,11 +58,6 @@ export const meta: MetaFunction = () => {
 export default function App() {
   const data = useTypedLoaderData<typeof loader>();
 
-  const location = useLocation();
-  useEffect(() => {
-    posthog.capture('$pageview');
-  }, [location]);
-
   return (
     <html lang="en" className="h-full w-full dark">
       <head>
@@ -91,9 +80,7 @@ export default function App() {
           >
             <WalletProvider>
               <TooltipProvider>
-                <PHProvider>
-                  <Outlet />
-                </PHProvider>
+                <Outlet />
               </TooltipProvider>
             </WalletProvider>
           </SolanaProvider>
