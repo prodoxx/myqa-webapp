@@ -1,0 +1,118 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL")
+}
+
+model User {
+  id              Int          @id @default(autoincrement())
+  username        String?      @unique @db.VarChar(255)
+  password        String?      @db.VarChar(255)
+  email           String       @unique @db.VarChar(255)
+  walletPublicKey String?      @unique
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  UserProfile     UserProfile?
+  IpfsPin         IpfsPin[]
+  QA              QA[]
+}
+
+enum OnboardingStep {
+  BASIC_INFORMATION
+  SOCIAL_LINKS
+  CRYPTO_WALLET
+  DONE
+  PENDING
+}
+
+model UserProfile {
+  id            String         @id @default(cuid())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  dateOfBirth   DateTime?
+  userId        Int            @unique
+  User          User           @relation(fields: [userId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  about         String?
+  Avatar        Asset?
+  ExternalLinks ExternalLink[]
+  onboarding    OnboardingStep @default(PENDING)
+  QAs           QA[]
+}
+
+enum SocialLink {
+  FACEBOOK
+  TWITTER
+  INSTAGRAM
+  YOUTUBE
+  THREADS
+  SNAPCHAT
+}
+
+model ExternalLink {
+  id            String      @id @default(cuid())
+  url           String
+  type          SocialLink
+  userProfileId String
+  UserProfile   UserProfile @relation(fields: [userProfileId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+}
+
+model Asset {
+  id            String       @id @default(cuid())
+  url           String
+  userProfileId String?      @unique
+  UserProfile   UserProfile? @relation(fields: [userProfileId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+}
+
+model QA {
+  id                Int         @id @default(autoincrement())
+  question          String
+  encryptedAnswer   String
+  unlockPriceInBonk Int
+  maxKeys           Int
+  questionHash      String
+  onChainId         String
+  ipfsPinId         String      @unique
+  userProfileId     String
+  userId            Int
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  IpfsPin           IpfsPin     @relation(fields: [ipfsPinId], references: [id])
+  UserProfile       UserProfile @relation(fields: [userProfileId], references: [id])
+  User              User        @relation(fields: [userId], references: [id])
+
+  @@index([ipfsPinId])
+  @@index([userProfileId])
+  @@index([userId])
+}
+
+enum PinStatus {
+  PINNED
+  UNPINNED
+}
+
+enum PinType {
+  QUESTION
+  ANSWER
+}
+
+model IpfsPin {
+  id           String    @id @default(cuid())
+  cid          String    @unique
+  status       PinStatus @default(PINNED)
+  symmetricKey String /// @encrypted?mode=strict
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  userId       Int
+  type         PinType   @default(QUESTION)
+  User         User      @relation(fields: [userId], references: [id])
+  qa           QA?
+  qaId         Int?
+
+  @@index([userId])
+  @@index([cid])
+}

@@ -1,8 +1,9 @@
-import { vitePlugin as remix } from "@remix-run/dev";
-import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
+import { vitePlugin as remix } from '@remix-run/dev';
+import { defineConfig } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
-declare module "@remix-run/node" {
+declare module '@remix-run/node' {
   interface Future {
     v3_singleFetch: true;
   }
@@ -10,6 +11,7 @@ declare module "@remix-run/node" {
 
 export default defineConfig({
   plugins: [
+    nodePolyfills({ include: ['buffer'] }),
     remix({
       future: {
         v3_fetcherPersist: true,
@@ -21,4 +23,12 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  build: {
+    target: 'esnext',
+  },
+  esbuild: {
+    supported: {
+      'top-level-await': true, //browsers can handle top-level-await features
+    },
+  },
 });
