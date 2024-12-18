@@ -1,4 +1,4 @@
-import { Program, web3, BN } from '@project-serum/anchor';
+import { Program, web3, BN } from '@coral-xyz/anchor';
 import { PublicKey, Connection } from '@solana/web3.js';
 import { QuestionAnswerParams, MarketplaceState } from './types';
 import { Myqa } from '../types/myqa';

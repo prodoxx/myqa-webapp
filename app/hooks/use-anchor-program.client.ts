@@ -1,4 +1,4 @@
-import { Program, AnchorProvider, setProvider } from '@project-serum/anchor';
+import { Program, AnchorProvider, setProvider } from '@coral-xyz/anchor';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { useMemo } from 'react';
 import { IDL, Myqa } from '~/lib/types/myqa';

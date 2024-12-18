@@ -1,2 +1,2 @@
-export { MarketplaceClient } from './client';
+export { MarketplaceClient } from './client.client';
 export type { QuestionAnswerParams, MarketplaceState } from './types';

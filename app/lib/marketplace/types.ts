@@ -1,4 +1,4 @@
-import { Program, BN } from '@project-serum/anchor';
+import { Program, BN } from '@coral-xyz/anchor';
 import { PublicKey } from '@solana/web3.js';
 import { WalletContextState } from '@solana/wallet-adapter-react';
 
