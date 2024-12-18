@@ -31,9 +31,9 @@ export default defineConfig({
     nodePolyfills({
       include: ['buffer', 'process'],
       globals: {
-        process: process.env.NODE_ENV === 'production' ? false : 'dev',
-        Buffer: 'dev',
-        global: 'dev',
+        process: process.env.NODE_ENV === 'production' ? true : 'dev',
+        Buffer: true,
+        global: true,
       },
     }),
     remix({
