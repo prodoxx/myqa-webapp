@@ -35,8 +35,6 @@ export default defineConfig({
           : ['buffer', 'process'],
       globals: {
         process: process.env.NODE_ENV === 'production' ? false : 'dev',
-        Buffer: true,
-        global: true,
       },
     }),
     remix({
